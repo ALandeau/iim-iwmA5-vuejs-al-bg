@@ -1,9 +1,16 @@
 {
   "posts": [
-    { "id": 1, "title": "json-server", "author": "typicode" }
+    { "id": 1, "title": "Article 1", "author": "John Doe", "content": "Content of Article 1" },
+    { "id": 2, "title": "Article 2", "author": "John Doe", "content": "Content of Article 2" },
+    { "id": 3, "title": "Article 3", "author": "John Doe", "content": "Content of Article 3" },
+    { "id": 4, "title": "Article 4", "author": "John Doe", "content": "Content of Article 4" },
+    { "id": 5, "title": "Article 4", "author": "John Doe", "content": "Content of Article 5" }
   ],
   "comments": [
-    { "id": 1, "body": "some comment", "postId": 1 }
+    { "id": 1, "body": "comment of article 2", "postId": 2 },
+    { "id": 1, "body": "comment of article 4", "postId": 4 },
+    { "id": 1, "body": "comment of article 1", "postId": 1 },
+    { "id": 1, "body": "second comment of article 4", "postId": 4 }
   ],
-  "profile": { "name": "typicode" }
+  "profile": { "name": "John Doe" }
 }

@@ -1,6 +1,16 @@
 <template>
-  <section class="container">
-  </section>
+  <div id="root">
+    <h1>IIM IWM A5 VueJS - AL - BG</h1>
+    <section class="container">
+      <article v-if="posts && posts.length">
+        <div v-for="post of posts" :key="post.id">
+          <h2>{{post.title}}</h2>
+          <p>{{post.content}}</p>
+          <p class="font-italic">{{post.author}}</p>
+        </div>
+      </article>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -9,13 +19,28 @@ import axios from '~/plugins/axios'
 export default {
   data() {
     return {
-
+      posts: []
     }
+  },
+
+  created() {
+    axios.get(`http://localhost:3001/posts`)
+      .then(response => {
+        this.posts = response.data
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+
+ h1 {
+   text-align: center;
+ }
+
 .container {
   margin: 0 auto;
   min-height: 100vh;
@@ -23,27 +48,17 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
-}
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
+  article div {
+    margin: 10px 0;
+    padding: 10px 25px;
+    background-color: rgba(33, 33, 33, 0.05);
+    border: { radius: 5px }
+    cursor: pointer;
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+    .font-italic {
+      font-style: italic;
+    }
+  }
 }
 </style>
