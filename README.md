@@ -1,6 +1,6 @@
-# iim-iwmA5-vuejs-al-bg
+# IIM IWM A5 | Projet VueJS
 
-> My remarkable Nuxt.js project
+> Alex Landeau - Bertrand Guy
 
 ## Build Setup
 
@@ -19,4 +19,12 @@ $ yarn start
 $ yarn run generate
 ```
 
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+## Json-Server Setup
+
+``` bash
+# install dependencies
+$ npm install -g json-server
+
+# watch json file
+$ json-server --watch db.json
+```
