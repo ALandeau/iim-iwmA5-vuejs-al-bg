@@ -26,5 +26,5 @@ $ yarn run generate
 $ npm install -g json-server
 
 # watch json file
-$ json-server --watch db.json
+$ json-server --watch db.json --port 3001
 ```
