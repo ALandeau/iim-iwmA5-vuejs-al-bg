@@ -5,9 +5,11 @@
       <button v-on:click="newData">New post</button>
       <article v-if="posts && posts.length">
         <div v-for="post of posts" :key="post.id">
-          <h2>{{post.title}}</h2>
+          <h2>{{post.name}}</h2>
           <p>{{post.content}}</p>
           <p class="font-italic">{{post.author}}</p>
+          <p>departure : {{post.departure[0].name}}</p>
+          <p>arrived : {{post.arrived[0].name}}</p>
           <button v-on:click="updateData(post.id)">Update</button>
           <button v-on:click="deleteData(post.id)">Delete</button>
         </div>
@@ -19,20 +21,37 @@
 <script>
 import axios from '~/plugins/axios'
 
-const apiUrl = "http://localhost:3001/posts/"
+const apiUrl = "http://localhost:3001/"
 
 export default {
   data() {
     return {
       posts: [],
+      destination: [],
       errors: []
     }
   },
 
   created() {
-    axios.get(apiUrl)
+    axios.get(apiUrl + "destination")
       .then(response => {
-        this.posts = response.data
+        this.destination = response.data
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    axios.get(apiUrl + "line?_embed=schedule")
+      .then(response => {
+        let destination = this.destination
+        this.posts = response.data.map(function(obj){
+          obj.departure = destination.filter(function( o ) { 
+            return o.id == obj.departure;
+          });
+          obj.arrived = destination.filter(function( o ) { 
+            return o.id == obj.arrived;
+          });
+          return obj
+        })
       })
       .catch(e => {
         this.errors.push(e)
@@ -40,7 +59,7 @@ export default {
   },
   methods: {
     deleteData: function (id) {
-      axios.delete(apiUrl + id)
+      axios.delete(apiUrl + "line/" + id)
         .then(response => {
           this.posts = this.posts.filter(function( obj ) { 
             return obj.id !== id;
@@ -57,7 +76,7 @@ export default {
         "content": "Content of a new article"
       }
 
-      axios.post(apiUrl, newPost)
+      axios.post(apiUrl + "line/", newPost)
        .then(response => {
          this.posts.push(response.data)
        })
@@ -70,7 +89,7 @@ export default {
         "author": "John Updated",
       }
       
-      axios.patch(apiUrl + id, updateData)
+      axios.patch(apiUrl + "line/" + id, updateData)
         .then(response => {
           this.posts = this.posts.map(function( obj ) { 
             return obj.id == id ? response.data : obj
