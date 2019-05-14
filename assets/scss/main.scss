@@ -1,0 +1,27 @@
+$card-grid: "line destination update delete
+             line schedule udpate delete";
+
+.card-line {
+  display: grid;
+  grid-template: {
+    areas: $card-grid;
+    columns: 40px 1fr 40px 40px;
+    rows: 30% 1fr;
+  };
+  width: 80%;
+  margin: auto;
+  padding: 5px 15px;
+  background-color: $color1-lb;
+  .line {
+    grid-area: line;
+  }
+  .destination {
+    grid-area: destination;
+  }
+  .update {
+    grid-area: update;
+  }
+  .delete {
+    grid-area: delete;
+  }
+}
