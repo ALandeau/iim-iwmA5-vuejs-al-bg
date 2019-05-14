@@ -42,7 +42,7 @@ export default {
     deleteData: function (id) {
       axios.delete(apiUrl + id)
         .then(response => {
-          this.posts = this.posts.filter(function( obj ) { 
+          this.posts = this.posts.filter(function( obj ) {
             return obj.id !== id;
           });
         })
@@ -69,10 +69,10 @@ export default {
       let updateData = {
         "author": "John Updated",
       }
-      
+
       axios.patch(apiUrl + id, updateData)
         .then(response => {
-          this.posts = this.posts.map(function( obj ) { 
+          this.posts = this.posts.map(function( obj ) {
             return obj.id == id ? response.data : obj
           });
         })
@@ -86,9 +86,12 @@ export default {
 
 <style lang="scss">
 
- h1 {
-   text-align: center;
- }
+h1 {
+  font: { family: $font; weight: $font-black }
+  @include font-size(30px);
+  text: { transform: uppercase; align: center }
+  color: $color4-dg;
+}
 
 .container {
   margin: 0 auto;
@@ -101,7 +104,8 @@ export default {
   article div {
     margin: 10px 0;
     padding: 10px 25px;
-    background-color: rgba(33, 33, 33, 0.05);
+    background-color: $color1-lb;
+    color: $color4-dg;
     border: { radius: 5px }
     cursor: pointer;
 
