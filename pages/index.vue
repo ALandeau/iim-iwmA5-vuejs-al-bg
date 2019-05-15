@@ -46,7 +46,7 @@
                   :schedule="schedule"/>
               </div>
             </div>
-            <div class="content">
+            <div class="content" v-if="post.departure[0]">
               {{post.departure[0].name}} -> {{post.arrived[0].name}}
             </div>
           </div>
@@ -63,6 +63,11 @@
           ></formulaire>
             <a href="#" class="card-footer-item" v-on:click="deleteData(post.id)">Delete</a>
           </footer>
+        </div>
+      </article>
+      <article v-else class="columns is-vcentered">
+        <div class="column">
+          <p class="column button is-loading">Loading</p>
         </div>
       </article>
     </div>
@@ -88,26 +93,25 @@ export default {
     }
   },
 
-  created() {
-    axios.get(apiUrl + "destination")
-      .then(response => {
-        this.destination = response.data
+  async created() {
+    try {
+      const response = await axios.get(apiUrl + "destination")
+      this.destination = response.data
+    } catch (e) {
+      this.errors.push(e)
+    }
+
+    try {
+      const response = await axios.get(apiUrl + "line?_embed=schedule")
+      let destination = this.destination
+      this.posts = response.data.map(function(obj){
+        obj.departure = getDeparture(obj, destination)
+        obj.arrived = getArrived(obj, destination)
+        return obj
       })
-      .catch(e => {
-        this.errors.push(e)
-      })
-    axios.get(apiUrl + "line?_embed=schedule")
-      .then(response => {
-        let destination = this.destination
-        this.posts = response.data.map(function(obj){
-          obj.departure = getDeparture(obj, destination)
-          obj.arrived = getArrived(obj, destination)
-          return obj
-        })
-      })
-      .catch(e => {
-        this.errors.push(e)
-      })
+    } catch (e) {
+      this.errors.push(e)
+    }
   },
   methods: {
     deleteData: function (id) {
@@ -199,6 +203,12 @@ function getArrived(obj, destination) {
 </script>
 
 <style lang="scss">
+  .menu-label {
+    padding: 5px 0 0 5px;
+  }
+  .is-loading {
+    border: none;
+  }
   .card {
     .card-header{
       cursor: pointer;

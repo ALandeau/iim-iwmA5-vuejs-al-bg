@@ -2,28 +2,22 @@
   "line": [
     {
       "id": 1,
-      "name": "Update line",
-      "departure": 3,
-      "arrived": 4,
+      "name": "Metro 4",
+      "departure": 8,
+      "arrived": 15,
       "author": "John Updated"
     },
     {
-      "id": 5,
-      "name": "Update line",
-      "departure": 8,
-      "arrived": 9
+      "name": "Metro 3",
+      "departure": 3,
+      "arrived": 11,
+      "id": 2
     },
     {
-      "id": 6,
-      "name": "Update line",
-      "departure": 10,
-      "arrived": 4
-    },
-    {
-      "id": 7,
-      "name": "Metro 7",
+      "name": "Metro 6",
       "departure": 11,
-      "arrived": 12
+      "arrived": 18,
+      "id": 3
     }
   ],
   "destination": [
