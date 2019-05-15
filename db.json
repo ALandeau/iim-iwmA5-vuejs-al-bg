@@ -2,38 +2,20 @@
   "line": [
     {
       "id": 1,
-      "name": "Metro 1",
-      "departure": 1,
-      "arrived": 2
-    },
-    {
-      "id": 2,
-      "name": "Metro 2",
+      "name": "Update line",
       "departure": 3,
       "arrived": 4,
       "author": "John Updated"
     },
     {
-      "id": 3,
-      "name": "Metro 3",
-      "departure": 5,
-      "arrived": 6
-    },
-    {
-      "id": 4,
-      "name": "Metro 4",
-      "departure": 7,
-      "arrived": 21
-    },
-    {
       "id": 5,
-      "name": "Metro 5",
+      "name": "Update line",
       "departure": 8,
       "arrived": 9
     },
     {
       "id": 6,
-      "name": "Metro 6",
+      "name": "Update line",
       "departure": 10,
       "arrived": 4
     },
@@ -145,7 +127,7 @@
         "00:30"
       ],
       "tuesday": [
-        "08:00",
+        "08:10",
         "10:00",
         "12:30",
         "14:00",
@@ -167,22 +149,17 @@
         "00:30"
       ],
       "thursday": [
-        "08:00",
-        "10:00",
-        "12:30",
-        "14:00",
-        "16:30",
-        "18:00",
-        "21:00",
-        "22:00",
-        "00:30"
+        "08:10",
+        "12:00",
+        "15:30",
+        "16:00",
+        "16:30"
       ],
       "friday": [
         "08:00",
         "10:00",
         "12:30",
         "14:00",
-        "16:30",
         "18:00",
         "21:00",
         "22:00",
@@ -631,7 +608,7 @@
         "00:30"
       ],
       "tuesday": [
-        "08:00",
+        "08:15",
         "10:00",
         "12:30",
         "14:00",
