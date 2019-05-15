@@ -1,20 +1,35 @@
 <template>
-  <div id="root">
-    <h1>IIM IWM A5 VueJS - AL - BG</h1>
-    <section class="container">
-      <button v-on:click="newData">New post</button>
+  <div id="root" class="columns">
+    <div class="column is-one-quarter">
+      <aside class="menu">
+        <p class="menu-label">
+          Line management
+        </p>
+        <ul class="menu-list">
+          <li><a class="navbar-item" v-on:click="newData">Add new</a></li>
+        </ul>
+      </aside>
+    </div>
+    <div class="column">
       <article v-if="posts && posts.length">
-        <div v-for="post of posts" :key="post.id">
-          <h2>{{post.name}}</h2>
-          <p>{{post.content}}</p>
-          <p class="font-italic">{{post.author}}</p>
-          <p>departure : {{post.departure[0].name}}</p>
-          <p>arrived : {{post.arrived[0].name}}</p>
-          <button v-on:click="updateData(post.id)">Update</button>
-          <button v-on:click="deleteData(post.id)">Delete</button>
+        <div class="card" v-for="post of posts" :key="post.id">
+          <header class="card-header">
+            <p class="card-header-title">
+              {{ post.name }}
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              {{post.departure[0].name}} -> {{post.arrived[0].name}}
+            </div>
+          </div>
+          <footer class="card-footer">
+            <a href="#" class="card-footer-item" v-on:click="updateData(post.id)">Update</a>
+            <a href="#" class="card-footer-item" v-on:click="deleteData(post.id)">Delete</a>
+          </footer>
         </div>
       </article>
-    </section>
+    </div>
   </div>
 </template>
 
@@ -44,10 +59,10 @@ export default {
       .then(response => {
         let destination = this.destination
         this.posts = response.data.map(function(obj){
-          obj.departure = destination.filter(function( o ) { 
+          obj.departure = destination.filter(function( o ) {
             return o.id == obj.departure;
           });
-          obj.arrived = destination.filter(function( o ) { 
+          obj.arrived = destination.filter(function( o ) {
             return o.id == obj.arrived;
           });
           return obj
@@ -61,7 +76,7 @@ export default {
     deleteData: function (id) {
       axios.delete(apiUrl + "line/" + id)
         .then(response => {
-          this.posts = this.posts.filter(function( obj ) { 
+          this.posts = this.posts.filter(function( obj ) {
             return obj.id !== id;
           });
         })
@@ -88,10 +103,10 @@ export default {
       let updateData = {
         "author": "John Updated",
       }
-      
+
       axios.patch(apiUrl + "line/" + id, updateData)
         .then(response => {
-          this.posts = this.posts.map(function( obj ) { 
+          this.posts = this.posts.map(function( obj ) {
             return obj.id == id ? response.data : obj
           });
         })
@@ -102,31 +117,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-
- h1 {
-   text-align: center;
- }
-
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-  article div {
-    margin: 10px 0;
-    padding: 10px 25px;
-    background-color: rgba(33, 33, 33, 0.05);
-    border: { radius: 5px }
-    cursor: pointer;
-
-    .font-italic {
-      font-style: italic;
-    }
-  }
-}
-</style>
