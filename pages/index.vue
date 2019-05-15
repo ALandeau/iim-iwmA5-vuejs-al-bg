@@ -44,12 +44,8 @@ export default {
       .then(response => {
         let destination = this.destination
         this.posts = response.data.map(function(obj){
-          obj.departure = destination.filter(function( o ) { 
-            return o.id == obj.departure;
-          });
-          obj.arrived = destination.filter(function( o ) { 
-            return o.id == obj.arrived;
-          });
+          obj.departure = getDeparture(obj, destination)
+          obj.arrived = getArrived(obj, destination)
           return obj
         })
       })
@@ -71,14 +67,17 @@ export default {
     },
     newData: function() {
       let newPost = {
-        "title": "New Article",
-        "author": "John Doe",
-        "content": "Content of a new article"
+        "name": "New line",
+        "departure": 5,
+        "arrived": 6
       }
 
-      axios.post(apiUrl + "line/", newPost)
-       .then(response => {
-         this.posts.push(response.data)
+      axios.post(apiUrl + "line", newPost)
+        .then(response => {
+          let destination = this.destination
+          response.data.departure = getDeparture(response.data, destination)
+          response.data.arrived = getArrived(response.data, destination)
+          this.posts.push(response.data)
        })
        .catch(e => {
          this.errors.push(e)
@@ -86,11 +85,14 @@ export default {
     },
     updateData: function(id) {
       let updateData = {
-        "author": "John Updated",
+        "name": "Update line",
       }
       
       axios.patch(apiUrl + "line/" + id, updateData)
         .then(response => {
+          let destination = this.destination
+          response.data.departure = getDeparture(response.data, destination)
+          response.data.arrived = getArrived(response.data, destination)
           this.posts = this.posts.map(function( obj ) { 
             return obj.id == id ? response.data : obj
           });
@@ -101,6 +103,19 @@ export default {
     }
   }
 }
+
+function getDeparture(obj, destination) {
+  return destination.filter(function( o ) { 
+    return o.id == obj.departure;
+  });
+}
+
+function getArrived(obj, destination) {
+  return destination.filter(function( o ) { 
+    return o.id == obj.arrived;
+  });
+}
+
 </script>
 
 <style lang="scss">
