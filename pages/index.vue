@@ -8,6 +8,7 @@
         <ul class="menu-list">
           <formulaire 
             :destinations=destination
+            create="create"
             v-on:newData="newData"
           ></formulaire>
         </ul>
@@ -27,7 +28,17 @@
             </div>
           </div>
           <footer class="card-footer">
-            <a href="#" class="card-footer-item" v-on:click="updateData(post.id)">Update</a>
+            <!-- <a href="#" class="card-footer-item" v-on:click="updateData(post.id)">Update</a> -->
+            <formulaire 
+            class="card-footer-item"
+            :destinations=destination
+            :id=post.id
+            :nameP=post.name
+            :departureP=post.departure[0].id
+            :arrivedP=post.arrived[0].id
+            create="update"
+            v-on:updateData="updateData"
+          ></formulaire>
             <a href="#" class="card-footer-item" v-on:click="deleteData(post.id)">Delete</a>
           </footer>
         </div>
@@ -103,12 +114,11 @@ export default {
          this.errors.push(e)
        })
     },
-    updateData: function(id) {
+    updateData: function(id, data) {
       let updateData = {
         "name": "Update line",
       }
-
-      axios.patch(apiUrl + "line/" + id, updateData)
+      axios.patch(apiUrl + "line/" + id, data)
         .then(response => {
           let destination = this.destination
           response.data.departure = getDeparture(response.data, destination)

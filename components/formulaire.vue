@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<li><a class="navbar-item" v-on:click="modalToggle(true)">Add new</a></li>
+		<a class="navbar-item" v-on:click="modalToggle(true)">{{ create | capitalize }}</a>
 		<div class="modal" v-bind:class="{'is-active': isActive}">
-			<div class="modal-background"></div>
+			<div class="modal-background" v-on:click="modalToggle(false)"></div>
 			<div class="modal-content">
 				<section class="modal-card-body">
 					<form>
@@ -32,7 +32,8 @@
 							</div>
 						</div>
 					</form>
-					<a class="navbar-item" v-on:click="$emit('newData', {name, departure, arrived}), modalToggle(false)">Save</a>
+					<a class="navbar-item" v-if="create == 'update'" v-on:click="$emit('updateData', id, {name, departure, arrived}), modalToggle(false)">Save</a>
+					<a class="navbar-item" v-if="create == 'create'" v-on:click="$emit('newData', {name, departure, arrived}), modalToggle(false)">Save</a>
     			</section>
 			</div>
 			<button class="modal-close is-large" v-on:click="modalToggle(false)" aria-label="close"></button>
@@ -42,7 +43,14 @@
 
 <script>
 export default {
-	props: ['destinations'],
+	props: [
+		'destinations', 
+		'create',
+		'id',
+		'nameP',
+		'departureP',
+		'arrivedP'
+	],
   	data() {
     	return {
 			isActive: false,
@@ -50,12 +58,24 @@ export default {
 			departure: null,
 			arrived: null
     	}
-  	},
+	},
+	created() {
+		this.name = this.nameP
+		this.departure = this.departureP
+		this.arrived = this.arrivedP
+	},
   	methods: {
 		modalToggle: function(x) {
 			this.isActive = x 
 		}
-  }
+	},
+	filters: {
+		capitalize: function(data) {
+			if (!data) return ''
+    		data = data.toString()
+			return data.charAt(0).toUpperCase() + data.slice(1)
+		}
+	}
 }
 
 </script>
