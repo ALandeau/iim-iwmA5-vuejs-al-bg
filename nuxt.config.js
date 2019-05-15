@@ -71,6 +71,7 @@ export default {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
-    }
+    },
+    // publicPath: 'http://localhost:63342/iim-iwmA5-vuejs-al-bg/dist/'
   }
 }
