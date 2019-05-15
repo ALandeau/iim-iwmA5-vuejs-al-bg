@@ -6,7 +6,10 @@
           Line management
         </p>
         <ul class="menu-list">
-          <li><a class="navbar-item" v-on:click="newData">Add new</a></li>
+          <formulaire 
+            :destinations=destination
+            v-on:newData="newData"
+          ></formulaire>
         </ul>
       </aside>
     </div>
@@ -35,6 +38,7 @@
 
 <script>
 import axios from '~/plugins/axios'
+import formulaire from "~/components/formulaire"
 
 const apiUrl = "http://localhost:3001/"
 
@@ -80,14 +84,15 @@ export default {
           this.errors.push(e)
         })
     },
-    newData: function() {
+    newData: function(data) {
+      console.log(data)
       let newPost = {
         "name": "New line",
         "departure": 5,
         "arrived": 6
       }
 
-      axios.post(apiUrl + "line", newPost)
+      axios.post(apiUrl + "line", data)
         .then(response => {
           let destination = this.destination
           response.data.departure = getDeparture(response.data, destination)
@@ -116,6 +121,9 @@ export default {
           this.errors.push(e)
         })
     }
+  },
+  components: {
+    formulaire
   }
 }
 
